@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	d "github.com/shirou/gopsutil/disk"
-	"github.com/zstyblik/go-facter/lib/common"
+	"github.com/3hedgehogs/go-facter/lib/common"
 )
 
 var (

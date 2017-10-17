@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	m "github.com/shirou/gopsutil/mem"
-	"github.com/zstyblik/go-facter/lib/common"
+	"github.com/3hedgehogs/go-facter/lib/common"
 )
 
 // Facter interface

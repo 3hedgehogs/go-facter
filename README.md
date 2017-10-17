@@ -21,8 +21,8 @@ In theory, go-facter can be used as a library of sort to build custom facts.
 ## Build
 
 ```
-go get github.com/zstyblik/go-facter/...
-cd ~/go/src/github.com/zstyblik/go-facter
+go get github.com/3hedgehogs/go-facter/...
+cd ~/go/src/github.com/3hedgehogs/go-facter
 go build ./cmd/facter
 ```
 

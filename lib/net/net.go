@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	n "github.com/shirou/gopsutil/net"
-	"github.com/zstyblik/go-facter/lib/common"
+	"github.com/3hedgehogs/go-facter/lib/common"
 )
 
 var (

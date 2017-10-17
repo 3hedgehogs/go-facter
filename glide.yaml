@@ -1,0 +1,23 @@
+package: .
+import:
+- package: github.com/3hedgehogs/go-facter
+  subpackages:
+  - lib/common
+  - lib/cpu
+  - lib/disk
+  - lib/facter
+  - lib/formatter
+  - lib/host
+  - lib/mem
+  - lib/net
+- package: github.com/drael/GOnetstat
+- package: github.com/ghodss/yaml
+  version: v1.0.0
+- package: github.com/shirou/gopsutil
+  version: v2.17.09
+  subpackages:
+  - cpu
+  - disk
+  - host
+  - mem
+  - net
