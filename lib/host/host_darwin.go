@@ -39,6 +39,30 @@ func getUniqueID() (string, error) {
 	return strings.TrimRight(out.String(), "\n"), nil
 }
 
+// getMacOSKernelVersion returns Darwin kernel version.
+func getMacOSKernelVersion() (string, error) {
+	systemProfiler := exec.Command("/usr/sbin/system_profiler","SPSoftwareDataType")
+	var out bytes.Buffer
+	systemProfiler.Stdout = &out
+	err := systemProfiler.Run()
+	if err != nil {
+		return "", err
+	}
+	f := func(c rune) bool {
+		return c == ':'
+	}
+	for _, line := range strings.Split(out.String(), "\n") {
+		values := strings.FieldsFunc(strings.TrimSpace(line), f)
+		if len(values) != 2 {
+			continue
+		}
+		if strings.HasPrefix(values[0], "Kernel Version") {
+			return strings.TrimSpace(values[1]), nil
+		}
+	}
+	return "", nil
+}
+
 // guessArch tries to guess architecture based on HW model
 func guessArch(HWModel string) string {
 	var arch string
@@ -101,6 +125,9 @@ func GetHostFacts(f Facter) error {
 	f.Add("kernel", capitalize(hostInfo.OS))
 	f.Add("operatingsystemrelease", hostInfo.PlatformVersion)
 	f.Add("operatingsystem", capitalize(hostInfo.Platform))
+	if hostInfo.PlatformFamily == "" {
+		hostInfo.PlatformFamily = hostInfo.OS
+	}
 	f.Add("osfamily", capitalize(hostInfo.PlatformFamily))
 	f.Add("uptime_seconds", hostInfo.Uptime)
 	f.Add("uptime_minutes", hostInfo.Uptime/60)
@@ -127,6 +154,10 @@ func GetHostFacts(f Facter) error {
 	hostid, err := getUniqueID()
 	if err == nil {
 		f.Add("uniqueid", hostid)
+	}
+	kernelVersion, err := getMacOSKernelVersion()
+	if err == nil && kernelVersion != "" {
+		f.Add("kernelversion", strings.Split(kernelVersion, " ")[1])
 	}
 	return nil
 }

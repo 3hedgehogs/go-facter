@@ -27,7 +27,7 @@ func GetCPUFacts(f Facter) error {
 	physIDs := make(map[uint64]struct{})
 	for _, v := range CPUs {
 		physID, err := strconv.ParseUint(v.PhysicalID, 10, 32)
-		if err == nil {
+		if err == nil || v.PhysicalID == "" {
 			physIDs[physID] = struct{}{}
 		}
 		f.Add(fmt.Sprintf("processor%v", v.CPU), v.ModelName)
